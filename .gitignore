@@ -6,6 +6,8 @@
 *.user
 *.sln.docstates
 
+*.bak
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
