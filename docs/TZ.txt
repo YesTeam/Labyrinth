@@ -81,12 +81,12 @@
 		4.1. Управление:
 			а) Класс MainApplication. Имеет статический метод: void main(String[] a);
 		4.2. Объекты.
-			а) Класс Tile {char glyph, Color color, String description} - неактивная ячейка матрицы.
+			а) Перечисление Tile {char glyph, Color color, String description} - неактивная ячейка матрицы.
 			б) Класс Item. Отображаемый объект: {char glyph, Color color, String name, String appearance, int foodValue, int attackValue, int defenseValue, int thrownAttackValue, int rangedAttackValue }.
 			в) Класс Creature. Активный объект: {int x, int y, int z, char glyph, World world, int maxHp, int hp, int attackValue, int defenseValue, int visionRadius, String name, int maxFood, int food, Item weapon, Item armor, int xp, int level, int maxMana, int regenHpCooldown, int regenHpPer1000, int mana, int regenManaCooldown, int regenManaPer1000, String causeOfDeath, Color color}
 			г) Расширения класса Creature: конкретные объекты.
 		4.3. Мир.
-			а) Класс World. Содержит массивы Tile[][] и Item[][] и методы для их изменения.
+			а) Класс World. Содержит массивы Tile[][][] и Item[][][] и методы для их изменения.
 			б) Класс WorldBuilder. Строит объект класса World. Содержит метод: World build(), который вызывается после вызова ряда других методов WorldBuilder, устанавливающих различные характеристики World (паттерн Builder).
 	5. Графический интерфейс.
 		5.1. Screens.
