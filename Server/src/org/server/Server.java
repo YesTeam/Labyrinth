@@ -5,37 +5,39 @@ import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Server {
 	
 	public static final int PORT = 7777;
 
-	private ExecutorService pool= Executors.newCachedThreadPool();
+	private final ExecutorService pool= Executors.newCachedThreadPool();
     private ServerSocket server;
-    private boolean connected = false;
+    private static final Logger logger = LogManager.getLogger(Server.class);
 	
     public static void main(String[] args) {
     	Server server = new Server();
-    	server.connect(PORT);
     	server.start();
     }
     
-    private void start() {
-    	if (!connected) {
-    		System.err.println("Server is not connected.");
+    public void start() {
+    	if (!connect(PORT)) {
+    		logger.error("server is not connected");
     		return;
     	}
     	new Thread(new ServerThread()).start();
 	}
 
-	public void connect(int port) {
+	private boolean connect(int port) {
         try {
-            server = new ServerSocket(7777);
+            server = new ServerSocket(port);
         }
         catch(IOException e) {
-            System.err.println("Port 7777 is in use already.");
-            return;
+    		logger.error("port " + port + " is already used");
+            return false;
         }
-        connected = true;
+        return true;
     }
 	
 	private class ServerThread implements Runnable {
@@ -43,10 +45,24 @@ public class Server {
 	    @Override
 		public void run() {
 	        while (true) {
-	            pool.execute(new Dispatcher(server));
+	            try {
+					logger.info("accept");
+					pool.execute(new Dispatcher(server.accept()));
+				} catch (IOException e) {
+					if (!server.isClosed()) {
+						logger.error("error while processing request", e);
+					}
+				}
 	        }
 		}
 	    		
+	}
+
+	public void stop() {
+		try {
+			server.close();
+		} catch (Exception e) {
+		}
 	}
 
 }
