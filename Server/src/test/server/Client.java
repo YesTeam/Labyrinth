@@ -24,14 +24,14 @@ public class Client {
 	private PrintStream ps;
 	private InputStream is;
 	
-	private Client() {
+	public Client() {
 		init();
 	}
 	
 	public static Client getInstance() {
 		return INSTANCE;
 	}
-	
+		
 	private void init() {
         try {
             InetAddress localhost = InetAddress.getLocalHost();
@@ -65,6 +65,14 @@ public class Client {
 			is.close();
 		} catch (Exception e) {
 		}
+	}
+	
+	public static void main(String[]args) {
+		Client client = Client.getInstance();
+		UserGameInfo userGameInfo = new UserGameInfo();
+		userGameInfo.setUserName("test");
+		userGameInfo.setAttack(12);	
+		logger.info(client.sendUserGameInfo(userGameInfo));
 	}
 
 }

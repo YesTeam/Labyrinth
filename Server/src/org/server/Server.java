@@ -44,14 +44,15 @@ public class Server {
 
 	    @Override
 		public void run() {
+			logger.info("started...");
 	        while (true) {
 	            try {
-					logger.info("accept");
 					pool.execute(new Dispatcher(server.accept()));
 				} catch (IOException e) {
 					if (!server.isClosed()) {
 						logger.error("error while processing request", e);
 					}
+					logger.info("error after closing ", e);
 				}
 	        }
 		}
