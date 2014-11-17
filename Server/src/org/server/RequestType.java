@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 public enum RequestType {
 	
 	PUSH_USER_GAME_INFO; // 1
-		
+	
 	private static final Logger logger = LogManager.getLogger(RequestType.class);
 
 	public static RequestType fromInt(int type) {

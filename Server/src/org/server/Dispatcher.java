@@ -19,9 +19,9 @@ public class Dispatcher implements Runnable {
 
 	@Override
 	public void run() {
+		logger.info(socket.getInetAddress().getHostName() + ":" + socket.getPort() + " connected");
 		try (Scanner scn = new Scanner(new InputStreamReader(socket.getInputStream()));){
 			while (scn.hasNextLine()) {
-				logger.info("message");
 				try {
 					int type = Integer.parseInt(scn.nextLine());
 					String messString = scn.nextLine();
@@ -42,6 +42,7 @@ public class Dispatcher implements Runnable {
 		} catch (IOException e) {
 			logger.error("", e);
 		} finally {
+			logger.info(socket.getInetAddress().getHostName() + ":" + socket.getPort() + " disconnected");
 			try {
 				socket.close();
 			} catch (Exception e) {

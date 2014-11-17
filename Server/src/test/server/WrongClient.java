@@ -18,7 +18,7 @@ public class WrongClient {
 	
 	private static final WrongClient INSTANCE = new WrongClient();
 	public static final int PORT = 7777;
-    private static final Logger logger = LogManager.getLogger(Client.class);
+    private static final Logger logger = LogManager.getLogger(WrongClient.class);
 
 	private Socket client;
 	private PrintStream ps;
@@ -65,6 +65,14 @@ public class WrongClient {
 			is.close();
 		} catch (Exception e) {
 		}
+	}
+	
+	public static void main(String[] args) {
+		WrongClient wClient = WrongClient.getInstance();
+		UserGameInfo userGameInfo = new UserGameInfo();
+		userGameInfo.setUserName("test2");
+		userGameInfo.setAttack(2);	
+		logger.info(wClient.sendUserGameInfo(userGameInfo));
 	}
 
 }

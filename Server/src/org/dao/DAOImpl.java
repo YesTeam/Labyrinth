@@ -5,13 +5,11 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import server.Responser;
-
 import common.UserGameInfo;
 
 public class DAOImpl implements DAO {
 
-	private static final Logger logger = LogManager.getLogger(Responser.class);
+	private static final Logger logger = LogManager.getLogger(DAOImpl.class);
 	
 	public DAOImpl() {
 		// TODO Initialization
