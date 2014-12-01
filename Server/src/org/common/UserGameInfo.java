@@ -1,14 +1,28 @@
 package common;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Table;
+
 import com.google.gson.Gson;
 
+@Entity
+@Table(appliesTo="user_game_info")
 public class UserGameInfo {
 
 	// TODO Annotations
 	
 	private static final Gson GSON = new Gson();
-		
-	private String userName; 
+	
+	@GenericGenerator(name="generator", strategy="increment")
+	@GeneratedValue
+	@Id
+	private long id;
+	
+	private String userName;
 	private boolean finished;
 	private int level; 
 	private int hp; 

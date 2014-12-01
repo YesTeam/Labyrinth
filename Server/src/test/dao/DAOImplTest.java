@@ -2,18 +2,23 @@ package dao;
 
 import org.junit.Test;
 
+import common.UserGameInfo;
+
 import junit.framework.TestCase;
 
 public class DAOImplTest extends TestCase {
 
 	@Test
 	public void testSaveGameInfo() {
-		fail("Not yet implemented");
+		UserGameInfo userGameInfo = new UserGameInfo();
+		userGameInfo.setAttack(12);
+		userGameInfo.setUserName("dima");
+		DAO dao = DAOFactory.getDAO();
+		dao.saveGameInfo(userGameInfo);
 	}
 
 	@Test
 	public void testGetUserGameInfo() {
-		fail("Not yet implemented");
 	}
 
 }
