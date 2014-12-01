@@ -19,7 +19,7 @@ public class ServerTest extends TestCase {
 	@Test
 	public void testConnect() {
 		server.start();
-		Client client = Client.getInstance();
+		Client client = new Client();
 		WrongClient wClient = WrongClient.getInstance();
 		UserGameInfo userGameInfo = new UserGameInfo();
 		userGameInfo.setUserName("test");
@@ -29,15 +29,13 @@ public class ServerTest extends TestCase {
 	}
 	
 	public void testBigClientsNumber() {
-//		server.start();
+		server.start();
 		int i = 0;
 		List<Client> clients = new ArrayList<>();
 		while (true) {
 			clients.add(new Client());
 			i++;
-//			if (i%1000 == 0) {
-				logger.info(i);
-//			}
+			logger.info(i);
 		}
 	}
 

@@ -9,14 +9,13 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import common.UserGameInfo;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import common.UserGameInfo;
-
 public class Client {
 	
-	private static final Client INSTANCE = new Client();
 	public static final int PORT = 7777;
     private static final Logger logger = LogManager.getLogger(Client.class);
 
@@ -25,17 +24,15 @@ public class Client {
 	private InputStream is;
 	
 	public Client() {
-		init();
+		this(null);
 	}
 	
-	public static Client getInstance() {
-		return INSTANCE;
-	}
-		
-	private void init() {
+	public Client(String host) {
         try {
-            InetAddress localhost = InetAddress.getLocalHost();
-            client = new Socket(localhost, PORT);
+        	if (host == null) {
+        		host = InetAddress.getLocalHost().getHostAddress();
+        	}
+            client = new Socket(host, PORT);
             ps = new PrintStream(new BufferedOutputStream(client.getOutputStream()),true);
             is=new BufferedInputStream(client.getInputStream());
         } catch (UnknownHostException e) {
@@ -44,7 +41,7 @@ public class Client {
         	logger.error("Connection error: can't connect to server.\n");
         }
 	}
-
+	
 	public Responce sendUserGameInfo(UserGameInfo userGameInfo) {
 		if (client.isClosed()) {
 			return Responce.FAIL;
@@ -66,9 +63,9 @@ public class Client {
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public static void main(String[]args) {
-		Client client = Client.getInstance();
+		Client client = new Client();
 		UserGameInfo userGameInfo = new UserGameInfo();
 		userGameInfo.setUserName("test");
 		userGameInfo.setAttack(12);	
