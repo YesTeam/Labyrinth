@@ -20,5 +20,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Server/lib/log4j-core-2.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/hibernate-core-4.3.7.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
