@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 
 public class Client {
 	
-	private static final Client INSTANCE = new Client();
 	public static final int PORT = 7777;
     private static final Logger logger = LogManager.getLogger(Client.class);
 
@@ -24,18 +23,16 @@ public class Client {
 	private PrintStream ps;
 	private InputStream is;
 	
-	private Client() {
-		init();
+	public Client() {
+		this(null);
 	}
 	
-	public static Client getInstance() {
-		return INSTANCE;
-	}
-	
-	private void init() {
+	public Client(String host) {
         try {
-            InetAddress localhost = InetAddress.getLocalHost();
-            client = new Socket(localhost, PORT);
+        	if (host == null) {
+        		host = InetAddress.getLocalHost().getHostAddress();
+        	}
+            client = new Socket(host, PORT);
             ps = new PrintStream(new BufferedOutputStream(client.getOutputStream()),true);
             is=new BufferedInputStream(client.getInputStream());
         } catch (UnknownHostException e) {
@@ -44,7 +41,7 @@ public class Client {
         	logger.error("Connection error: can't connect to server.\n");
         }
 	}
-
+	
 	public Responce sendUserGameInfo(UserGameInfo userGameInfo) {
 		if (client.isClosed()) {
 			return Responce.FAIL;
