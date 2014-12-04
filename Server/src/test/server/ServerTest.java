@@ -28,7 +28,7 @@ public class ServerTest extends TestCase {
 		assertEquals(Responce.FAIL, wClient.sendUserGameInfo(userGameInfo));
 	}
 	
-	public void testBigClientsNumber() {
+	public void bigClientsNumber() {
 		server.start();
 		int i = 0;
 		List<Client> clients = new ArrayList<>();
