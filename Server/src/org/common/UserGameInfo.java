@@ -1,27 +1,33 @@
 package common;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.google.gson.Gson;
 
 @Entity
 @Table(name="user_game_info")
 public class UserGameInfo {
-
-	// TODO Annotations
 	
 	private static final Gson GSON = new Gson();
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GenericGenerator(name="increment", strategy = "increment") 
+	@GeneratedValue(generator="increment")
 	private long id;
 	
+	@Column(name="userName")
 	private String userName;
 
+	private Date time;
+	
 	private boolean finished;
 	private int level; 
 	private int hp; 
@@ -35,6 +41,20 @@ public class UserGameInfo {
 	private int experience;
 		
 	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the userName
 	 */
 	public String getUserName() {
@@ -46,6 +66,20 @@ public class UserGameInfo {
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public Date getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 	/**
@@ -203,7 +237,9 @@ public class UserGameInfo {
 	}
 
 	public static UserGameInfo fromJson(String json) {
-		return GSON.fromJson(json, UserGameInfo.class);
+		UserGameInfo userGameInfo = GSON.fromJson(json, UserGameInfo.class);
+		userGameInfo.time = new Date(System.currentTimeMillis());
+		return userGameInfo;
 	}
 	
 	public String toJson() {

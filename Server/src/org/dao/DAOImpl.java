@@ -2,33 +2,46 @@ package dao;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.service.ServiceRegistry;
 
 import common.UserGameInfo;
 
 public class DAOImpl implements DAO {
 
-	private static final Logger logger = LogManager.getLogger(DAOImpl.class);
-	private static final Session SESSION = HibernateUtil.getSessionFactory().getCurrentSession();
+	private final SessionFactory sessionFactory;
 	
-	public DAOImpl() {
+	DAOImpl() {
+    	Configuration configuration = new Configuration();
+    	configuration.configure("hibernate.cfg.xml");
+    	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+    	        .applySettings(configuration.getProperties()).build();
+    	sessionFactory = configuration
+    	        .buildSessionFactory(serviceRegistry);
 	}
 	
 	@Override
 	public void saveGameInfo(UserGameInfo userGameInfo) {
-		Transaction transaction = SESSION.beginTransaction();
-		SESSION.persist(userGameInfo);
-		transaction.commit();
+		getSession().beginTransaction();
+		getSession().persist(userGameInfo);
+		getSession().getTransaction().commit();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserGameInfo> getUserGameInfo(String userName) {
-		// TODO Auto-generated method stub
-		logger.warn("dao.DAOImpl.getUserGameInfo(String userName) is not implemented");
-		return null;
+		getSession().beginTransaction();
+		List<UserGameInfo> retValue = getSession().createCriteria(UserGameInfo.class).add(Restrictions.eq("userName", userName)).list();
+		getSession().getTransaction().commit();
+		return retValue;
+	}
+	
+	private Session getSession() {
+		return sessionFactory.getCurrentSession();
 	}
 
 }
