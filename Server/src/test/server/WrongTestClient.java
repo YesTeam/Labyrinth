@@ -14,21 +14,21 @@ import org.apache.logging.log4j.Logger;
 
 import common.UserGameInfo;
 
-public class WrongClient {
+public class WrongTestClient {
 	
-	private static final WrongClient INSTANCE = new WrongClient();
+	private static final WrongTestClient INSTANCE = new WrongTestClient();
 	public static final int PORT = 7777;
-    private static final Logger logger = LogManager.getLogger(WrongClient.class);
+    private static final Logger logger = LogManager.getLogger(WrongTestClient.class);
 
 	private Socket client;
 	private PrintStream ps;
 	private InputStream is;
 	
-	private WrongClient() {
+	private WrongTestClient() {
 		init();
 	}
 	
-	public static WrongClient getInstance() {
+	public static WrongTestClient getInstance() {
 		return INSTANCE;
 	}
 	
@@ -68,7 +68,7 @@ public class WrongClient {
 	}
 	
 	public static void main(String[] args) {
-		WrongClient wClient = WrongClient.getInstance();
+		WrongTestClient wClient = WrongTestClient.getInstance();
 		UserGameInfo userGameInfo = new UserGameInfo();
 		userGameInfo.setUserName("test2");
 		userGameInfo.setAttack(2);	

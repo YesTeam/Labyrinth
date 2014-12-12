@@ -1,14 +1,22 @@
 package client;
 
+import java.util.UUID;
+
+import main.UserGameInfo;
+
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import junit.framework.TestCase;
+public class ClientTest extends Assert {
 
-public class ClientTest extends TestCase {
-
+	@Ignore
 	@Test
 	public void testSendUserGameInfo() {
-		fail("Not yet implemented");
+		Client client = new Client();
+		UserGameInfo uInfo = new UserGameInfo();
+		uInfo.setUserName(UUID.randomUUID().toString());
+		assertEquals(Responce.OK, client.sendUserGameInfo(uInfo));
 	}
 
 }

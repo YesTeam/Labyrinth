@@ -40,8 +40,27 @@ public class DAOImpl implements DAO {
 		return retValue;
 	}
 	
+	@Override
+	public UserGameInfo getUserGameInfoById(long id) {
+		getSession().beginTransaction();
+		UserGameInfo retValue = (UserGameInfo) getSession().get(UserGameInfo.class, id);
+		getSession().getTransaction().commit();
+		return retValue;
+	}
+	
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
+
+	@Override
+	public boolean deleteUserGameInfo(long id) {
+		getSession().beginTransaction();
+		UserGameInfo ugi = (UserGameInfo) getSession().get(UserGameInfo.class, id);
+		getSession().delete(ugi);
+		getSession().getTransaction().commit();
+		return false;
+	}
+	
+	
 
 }

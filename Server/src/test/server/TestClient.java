@@ -14,20 +14,20 @@ import common.UserGameInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Client {
+public class TestClient {
 	
 	public static final int PORT = 7777;
-    private static final Logger logger = LogManager.getLogger(Client.class);
+    private static final Logger logger = LogManager.getLogger(TestClient.class);
 
 	private Socket client;
 	private PrintStream ps;
 	private InputStream is;
 	
-	public Client() {
+	public TestClient() {
 		this(null);
 	}
 	
-	public Client(String host) {
+	public TestClient(String host) {
         try {
         	if (host == null) {
         		host = InetAddress.getLocalHost().getHostAddress();
@@ -60,12 +60,13 @@ public class Client {
 		try {
 			ps.close();
 			is.close();
+			client.close();
 		} catch (Exception e) {
 		}
 	}
 
 	public static void main(String[]args) {
-		Client client = new Client();
+		TestClient client = new TestClient();
 		UserGameInfo userGameInfo = new UserGameInfo();
 		userGameInfo.setUserName("test");
 		userGameInfo.setAttack(12);	

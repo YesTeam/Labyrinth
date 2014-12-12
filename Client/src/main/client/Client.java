@@ -43,7 +43,7 @@ public class Client {
 	}
 	
 	public Responce sendUserGameInfo(UserGameInfo userGameInfo) {
-		if (client.isClosed()) {
+		if (client==null || client.isClosed()) {
 			return Responce.FAIL;
 		}
     	ps.println(RequestType.PUSH_USER_GAME_INFO.toInt());
@@ -60,6 +60,7 @@ public class Client {
 		try {
 			ps.close();
 			is.close();
+			client.close();
 		} catch (Exception e) {
 		}
 	}
