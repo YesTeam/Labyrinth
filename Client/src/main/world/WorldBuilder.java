@@ -31,8 +31,7 @@ public class WorldBuilder {
 	private WorldBuilder randomizeTiles() {
             //чтение либиринта из файла
             try{
-            BufferedReader reader = new BufferedReader(new FileReader("lab.txt"));
-           
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("lab.txt")));           
             double tile;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
