@@ -18,7 +18,19 @@ public class Client {
 	
 	public static final int PORT = 7777;
     private static final Logger logger = LogManager.getLogger(Client.class);
-
+    private static Client CLIENT;
+    
+    public static Client getInstance() {
+    	if (CLIENT == null) {
+    		try {
+				CLIENT = new Client(InetAddress.getLocalHost().getHostAddress());
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+    	}
+    	return CLIENT;
+    }
+    
 	private Socket client;
 	private PrintStream ps;
 	private InputStream is;
