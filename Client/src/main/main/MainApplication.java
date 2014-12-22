@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
+import client.Client;
 import screens.Screen;
 import screens.StartScreen;
 import asciiPanel.AsciiPanel;
@@ -48,6 +49,7 @@ public class MainApplication extends JFrame implements KeyListener {
 	}
 
 	public static void main(String[] args) {
+		Client.getInstance();
 		MainApplication app = new MainApplication();
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setVisible(true);
