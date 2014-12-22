@@ -12,6 +12,7 @@ public class Dispatcher implements Runnable {
 
 	private final Socket socket;
 	private static final Logger logger = LogManager.getLogger(Dispatcher.class);
+	private String name;
 	
 	public Dispatcher(Socket socket) {
 		this.socket = socket;
@@ -19,7 +20,8 @@ public class Dispatcher implements Runnable {
 
 	@Override
 	public void run() {
-		logger.info(socket.getInetAddress().getHostName() + ":" + socket.getPort() + " connected");
+		name = socket.getInetAddress().getHostName() + ":" + socket.getPort();
+		logger.info(name + " connected");
 		try (Scanner scn = new Scanner(new InputStreamReader(socket.getInputStream()));){
 			while (scn.hasNextLine()) {
 				try {
@@ -27,22 +29,22 @@ public class Dispatcher implements Runnable {
 					String messString = scn.nextLine();
 					Processor processor = Processors.getProcessor(RequestType.fromInt(type));
 					if (processor == null) {
-						logger.error("no processor found for " + type + " request type");
+						logger.error(name + ": no processor found for " + type + " request type");
 						Responser.sendFail(socket);
 						return;
 					}
 					processor.process(messString);
-					logger.info("message processed: " + messString);
+					logger.info(name + ": message processed: " + messString);
 					Responser.sendOk(socket);
 				} catch (Exception e) {
-					logger.error("", e);
+					logger.error(name, e);
 					Responser.sendFail(socket);
 				}
 			}
 		} catch (IOException e) {
-			logger.error("", e);
+			logger.error(name, e);
 		} finally {
-			logger.info(socket.getInetAddress().getHostName() + ":" + socket.getPort() + " disconnected");
+			logger.info(name + " disconnected");
 			try {
 				socket.close();
 			} catch (Exception e) {
